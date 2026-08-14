@@ -1,0 +1,16 @@
+{
+  "name": "cautious",
+  "description": "Default-ask. Only a short, explicit allowlist of clearly safe actions runs without confirmation. Best for unfamiliar codebases or your first week running an agent autonomously.",
+  "rules": [
+    { "tool": "Bash", "match": "^(rm -rf|sudo |mkfs|dd if=)", "decision": "deny", "reason": "Blocked by guardrail cautious profile: destructive/irreversible command pattern." },
+    { "tool": "Bash", "match": "^git push.*--force", "decision": "deny", "reason": "Force push is blocked outright under the cautious profile." },
+    { "tool": "Bash", "match": "^(git status|git diff|git log|ls|cat|pwd|echo|npm test|npm run lint|pytest)\\b", "decision": "allow", "reason": "Read-only or test command explicitly allowlisted." },
+    { "tool": "Read", "decision": "allow", "reason": "Reads are always safe to auto-approve." },
+    { "tool": "*", "decision": "ask", "reason": "No matching allowlist rule under the cautious profile; defaulting to ask." }
+  ],
+  "circuitBreaker": {
+    "maxAutoApprovedActions": 20,
+    "windowMinutes": 15,
+    "onTrip": "ask"
+  }
+}
