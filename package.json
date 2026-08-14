@@ -68,5 +68,45 @@
     "README.md",
     "SPEC.md",
     "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaedynd22-cell/guardrail-cc.git"
+  },
+  "homepage": "https://github.com/jaedynd22-cell/guardrail-cc#readme",
+  "bugs": {
+    "url": "https://github.com/jaedynd22-cell/guardrail-cc/issues"
+  }
+}
+{
+  "name": "guardrail-cc",
+  "version": "0.1.0",
+  "description": "A polished safety-and-spend layer for Claude Code (and other agentic coding tools) — fine-grained autonomy profiles, a runaway-loop circuit breaker, and a local audit trail, without needing enterprise sandbox infra.",
+  "bin": {
+    "guardrail": "./bin/guardrail.js"
+  },
+  "main": "src/lib/policy-engine.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "claude-code",
+    "ai-agent",
+    "hooks",
+    "permissions",
+    "sandbox",
+    "safety",
+    "audit-log"
+  ],
+  "license": "MIT",
+  "files": [
+    "bin",
+    "src",
+    "hooks",
+    "profiles",
+    "README.md",
+    "SPEC.md",
+    "LICENSE"
   ]
 }
