@@ -1,0 +1,13 @@
+{
+  "name": "aggressive",
+  "description": "Default-allow almost everything so the agent can run unattended for long stretches (equivalent in spirit to --dangerously-skip-permissions), but keeps a short hard-deny list for the handful of commands that cause irreversible damage, plus a tight circuit breaker so a runaway loop still gets caught.",
+  "rules": [
+    { "tool": "Bash", "match": "^(rm -rf /($|[^a-zA-Z])|sudo rm -rf /|mkfs|dd if=.*of=/dev/sd)", "decision": "deny", "reason": "Blocked even under the aggressive profile: catastrophic, irreversible command." },
+    { "tool": "*", "decision": "allow", "reason": "Auto-approved under the aggressive profile." }
+  ],
+  "circuitBreaker": {
+    "maxAutoApprovedActions": 150,
+    "windowMinutes": 15,
+    "onTrip": "ask"
+  }
+}
