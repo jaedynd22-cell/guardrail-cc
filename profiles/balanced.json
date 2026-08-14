@@ -1,0 +1,19 @@
+{
+  "name": "balanced",
+  "description": "Default-allow for everyday file edits and test/build commands, default-deny for a short list of clearly destructive patterns, ask for everything else that touches the network or git history. Good default for day-to-day agentic coding.",
+  "rules": [
+    { "tool": "Bash", "match": "^(rm -rf /|sudo rm|mkfs|dd if=.*of=/dev)", "decision": "deny", "reason": "Blocked by guardrail balanced profile: irreversible system-level command." },
+    { "tool": "Bash", "match": "^git push.*--force", "decision": "ask", "reason": "Force push requires explicit confirmation under the balanced profile." },
+    { "tool": "Bash", "match": "(curl|wget) .*\\|\\s*(sh|bash)", "decision": "deny", "reason": "Piping a remote download directly into a shell is blocked by guardrail policy." },
+    { "tool": "Edit", "decision": "allow", "reason": "File edits are auto-approved under the balanced profile." },
+    { "tool": "Write", "decision": "allow", "reason": "File writes are auto-approved under the balanced profile." },
+    { "tool": "Read", "decision": "allow", "reason": "Reads are always safe to auto-approve." },
+    { "tool": "Bash", "match": "^(npm|yarn|pnpm|pytest|go test|cargo test|make)\\b", "decision": "allow", "reason": "Common build/test command auto-approved under the balanced profile." },
+    { "tool": "*", "decision": "ask", "reason": "No matching allowlist rule under the balanced profile; defaulting to ask." }
+  ],
+  "circuitBreaker": {
+    "maxAutoApprovedActions": 60,
+    "windowMinutes": 15,
+    "onTrip": "ask"
+  }
+}
